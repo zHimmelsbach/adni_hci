@@ -1,5 +1,5 @@
 ---
-title: Intro Page
+title: Predicting HCI from Cognitive Exam Scores with Data from ADNI
 ---
 
 
