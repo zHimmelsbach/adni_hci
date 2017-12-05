@@ -1,4 +1,4 @@
-theme: jekyll-theme-primer
+theme: jekyll-theme-minimal
 title: Predicting HCI from Cognitive Score Exams in the ADNI Dataset
 description: Can we better target who undergoes expensive PET scans?
 baseurl:
