@@ -1,7 +1,6 @@
 ---
 title: Neuropsychological Exam Data
 notebook: Neuropsychological_Data_Summaries.ipynb
-nav_include: 2
 ---
 
 ## Contents
