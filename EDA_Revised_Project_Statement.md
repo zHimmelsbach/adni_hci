@@ -55,43 +55,12 @@ In the data summary above, we observed that the mean and variation of HCI scores
 
 
 
-```python
-#Plot relationship between HCI and ADAS scores over Year of Visits
-plt.subplot(1,3,1)
-plt.ylim(0, 75)
-plt.xlabel("Baseline HCI")
-plt.ylabel("ADAS Score")
-plt.scatter(total_scores.hci_bl, total_scores.adas_total_0)
-plt.subplot(1,3,2)
-plt.ylim(0, 75)
-plt.xlabel("6 Month HCI")
-plt.scatter(total_scores.hci_m06, total_scores.adas_total_06)
-plt.subplot(1,3,3)
-plt.ylim(0, 75)
-plt.xlabel("12 Month HCI")
-sns.despine()
-plt.scatter(total_scores.hci_m12, total_scores.adas_total_12);
-```
-
-
 
 ![png](EDA_Revised_Project_Statement_files/EDA_Revised_Project_Statement_13_0.png)
 
 
 In the plots above, we observed a linear relationship between the HCI and ADAS scores. As time progressed, patient HCI scores tended to increase but the relationship with ADAS scores remained linear.
 
-
-
-```python
-#Plot relationship of HCI to other tests at baseline
-i = 1
-for test in ['cdglobal_sc', 'faqtotal_bl', 'gdtotal_sc', 'mmscore_sc', 'hmscore', 'npiscore_bl']:
-    plt.subplot(2,3,i)
-    plt.scatter(total_scores.hci_bl, total_scores.loc[:, test])
-    plt.xlabel(test)
-    plt.tight_layout() 
-    i += 1
-```
 
 
 
@@ -104,38 +73,9 @@ In the subplots above, we observed clear linear trends for the FAQ, MM, and CD t
 
 
 
-```python
-def plot_test_corrs(test_prefix, test_full_name, note=''):
-    items = [x for x in all_merged.columns if re.search(test_prefix, x) != None and re.search(r'06', x) != None]
-    fig, ax = plt.subplots(1,1, figsize=(10,8))
-    sns.heatmap(all_merged[items].dropna().corr(), ax=ax)
-    ax.set_xticklabels(items, rotation='vertical')
-    ax.set_yticklabels(items[::-1], rotation='horizontal')
-    plt.title('Correlations Among ' + test_full_name + ' Items', fontsize=14)
-    fig.text(.5, -.06, note, ha='center', fontsize=10)
-    plt.show()
-```
-
-
-
-
-```python
-cd_name = 'Clinical Dementia Rating'
-cd_note = 'Note: cdsource indicates whether the test was administered in person.'
-plot_test_corrs('cd', cd_name, cd_note)
-```
-
-
 
 ![png](EDA_Revised_Project_Statement_files/EDA_Revised_Project_Statement_19_0.png)
 
-
-
-
-```python
-npi_name = 'Neuropsychiatric Inventory'
-plot_test_corrs('npi', npi_name)
-```
 
 
 
