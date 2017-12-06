@@ -1,7 +1,6 @@
 ---
 title: Predictive Modeling
 notebook: baseline_models.ipynb
-nav_include: 3
 ---
 
 ## Contents
