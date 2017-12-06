@@ -9,9 +9,9 @@ nav_include: 2
 *  
 {: toc}
 
-    CS109A - Group 59: Zachary Himmelsbach and Alli Welton
 
-## Revised Project Question: Can we predict a patient's HCI (hypometabolic convergence index) given their answers to a group of cognitive tests?
+
+## Can we predict a patient's HCI (hypometabolic convergence index) given their answers to a group of cognitive tests?
 
 One of the indicators of Alzheimer's disease is hypometabolism (low levels of metabolic activity) in particular regions of the brain. Hypometabolism can be visualized in a PET scan of the brain using a radioactive glucose tracer, known as FDG-PET. However, an FDG-PET scan will usually cost a patient around $6700. Being able to predict the HCI from a set of cognitive test questions, and thus the likelihood that a patient with mild cognitive impairment will decline to Alzheimer's, could save money for patients and help alert families earlier. 
 
@@ -36,7 +36,7 @@ Under the ADNI 1 protocol, eight neuropsychological exams were administered, sev
 
 
 
-#### What methods have you used to explore the data?
+#### Exploration
 
 We first considered using the Amyloid Convergence Index (a similar measurement developed by BAI that considers amyloid plaque build-up) or attempting to create a Tau Convergence Index (which would take the same approach as ACI or HCI, but instead looking at tau protein tangles) as response variables for which to build additional models. However, creating a TCI would have been more complicated than the scope of this project allows. The ACI data had not been computed for many patients in ADNI1 and did not have published documentation, so we decided to stick to attempting to predict the HCI alone. 
 
@@ -44,153 +44,10 @@ We noted that the BAI team found significant correlations between the HCI and sc
 
 In the neuropsychological test data, we explored which tests were administered under each ADNI protocol, selecting those which were included in ADNI 1. We tabulated how many unique patients had scores and sub-task scores for each exam, and noted that the number of records dropped for exams administered more than 12 months after baseline. For each of the seven exams we cleaned data and merged them together by patient ID, checking how many subjects had records for all tests. In preparation for feature selection (since we have many test items to choose from), we examined the correlations between items on the various tests.
 
-### Visualizations
-
-
-
-```python
-import pandas as pd
-import numpy as np
-import matplotlib
-import matplotlib.pyplot as plt
-import sklearn.metrics as metrics
-import seaborn as sns
-import time
-import re
-%matplotlib inline
-```
-
-
-
-
-```python
-#Set styles
-sns.set_style('white')
-sns.set_context('talk')
-```
-
-
-
-
-```python
-all_merged = pd.read_pickle("ADNIcsv/all_merged.pkl")
-total_score_names = ['adas_total_0', 'adas_total_06', 'adas_total_12', 
-                     'cdglobal_sc', 'cdglobal_06', 'cdglobal_12',  
-                     'faqtotal_bl', 'faqtotal_06', 'faqtotal_12', 
-                     'gdtotal_sc', 'gdtotal_12',  
-                     'mmscore_sc', 'mmscore_06', 'mmscore_12', 
-                     'hmscore',
-                     'npiscore_bl', 'npiscore_06', 'npiscore_12']
-hci_fields = ['hci_bl', 'hci_m06', 'hci_m12']
-total_scores = all_merged.loc[:, total_score_names + hci_fields]
-```
-
 
 ### HCI Exploration
 
-
-
-```python
-#Plot distribution of HCI scores changing over time
-total_scores.hci_bl.plot.kde()
-total_scores.hci_m06.plot.kde()
-total_scores.hci_m12.plot.kde()
-plt.title("Changes in HCI Distribution Over Year of Visits")
-plt.xlabel("HCI (Hypometabolic Convergence Index)")
-plt.legend(['Baseline', '6 Month', '12 Month'])
-sns.despine()
-```
-
-
-
 ![png](EDA_Revised_Project_Statement_files/EDA_Revised_Project_Statement_10_0.png)
-
-
-
-
-```python
-total_scores.loc[:, ['hci_bl', 'hci_m06', 'hci_m12']].describe()
-```
-
-
-
-
-
-<div>
-<style>
-    .dataframe thead tr:only-child th {
-        text-align: right;
-    }
-
-    .dataframe thead th {
-        text-align: left;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>hci_bl</th>
-      <th>hci_m06</th>
-      <th>hci_m12</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>count</th>
-      <td>218.000000</td>
-      <td>203.000000</td>
-      <td>184.000000</td>
-    </tr>
-    <tr>
-      <th>mean</th>
-      <td>8.639266</td>
-      <td>9.251281</td>
-      <td>9.562391</td>
-    </tr>
-    <tr>
-      <th>std</th>
-      <td>4.844950</td>
-      <td>5.676936</td>
-      <td>5.770063</td>
-    </tr>
-    <tr>
-      <th>min</th>
-      <td>1.230000</td>
-      <td>1.040000</td>
-      <td>1.310000</td>
-    </tr>
-    <tr>
-      <th>25%</th>
-      <td>5.162500</td>
-      <td>5.015000</td>
-      <td>5.277500</td>
-    </tr>
-    <tr>
-      <th>50%</th>
-      <td>7.980000</td>
-      <td>8.170000</td>
-      <td>8.385000</td>
-    </tr>
-    <tr>
-      <th>75%</th>
-      <td>10.977500</td>
-      <td>12.170000</td>
-      <td>11.895000</td>
-    </tr>
-    <tr>
-      <th>max</th>
-      <td>26.810000</td>
-      <td>28.360000</td>
-      <td>29.670000</td>
-    </tr>
-  </tbody>
-</table>
-</div>
 
 
 
@@ -297,8 +154,4 @@ We saw an opportunity to contribute to existing work on the HCI because while th
 K. Chen, N. Ayutyanont, J. B. Langbaum, A. S. Fleisher, C. Reschke, W. Lee, X. Liu, D. Bandy, G. E. Alexander, P. M. Thompson, L. Shaw, J. Q. Trojanowski, C. R. Jack, Jr., S. M. Landau, N. L. Foster, D. J. Harvey, M. W. Weiner, R. A. Koeppe, W. J. Jagust, and E. M. Reiman, "Characterizing Alzheimer's disease using a hypometabolic convergence index," *Neuroimage.*, vol. 56, no. 1, pp. 52-60, May 2011.
 
 
-
-```python
-
-```
 
