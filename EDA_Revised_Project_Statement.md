@@ -1,7 +1,7 @@
 ---
-title: Project Statement
+title: Data Exploration
 notebook: EDA_Revised_Project_Statement.ipynb
-nav_include: 1
+nav_include: 2
 ---
 
 ## Contents
