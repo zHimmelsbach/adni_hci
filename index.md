@@ -1,11 +1,13 @@
 ---
-title: Predicting HCI from Cognitive Exam Scores with Data from ADNI
+title: A Cheaper Way to Target Expensive Diagnostic Techniques for Alzheimer's?
 ---
 
 
+### Project Motivation
 
-> This webpage explores our work to predict HCI scores from cognitive exams administered in the ADNI study.
+Clinicians use FDG-PET scans to determine the degree of hypometabolism (unusually low metabolic activity) in a patient's brain. These measurements can help predict whether a patients with Mild Cognitive Impairment is likely to develop Alzheimer's Disease. However, these scans are very expensive. 
 
 
+### What if we could find a way to target PET scans to the patients at highest risk of developing Alzheimer's? 
 
-Click the links above to introduce yourself to the cognitive exam data used, to learn about HCI and our motivations for this project, and to explore a set of predictive models.
+We decided to see if we could use answers to cognitive test questions to see if we could predict the extent of hypometabolism in patient brains. 
