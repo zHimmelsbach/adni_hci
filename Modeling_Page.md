@@ -1,5 +1,5 @@
 ---
-title: Modeling & Results
+title: Modeling
 notebook: Modeling_Page.ipynb
 nav_include: 3
 ---
