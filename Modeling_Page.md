@@ -199,7 +199,7 @@ We fit models separately for data from the baseline of the study, six months aft
 
 <div style="text-align:center"><img src ="images/output_11_1.png" /></div>
 
-## Attempt 2: Random Forest
+### Attempt 2: Random Forest
 
 Because of computation time, these results are aggregated from 5 iterations of fitting on the baseline set only.
 
@@ -266,7 +266,7 @@ Because of computation time, these results are aggregated from 5 iterations of f
 <div style="text-align:center"><img src ="images/output_15_1.png" /></div>
 
 
-## Attempt 3: Step Forward Variable Selection
+### Attempt 3: Step Forward Variable Selection
 
 These results are aggregated from 100 iterations of the fitting and scoring process.
 
@@ -352,7 +352,7 @@ These results are aggregated from 100 iterations of the fitting and scoring proc
 <div style="text-align:center"><img src ="images/output_19_1.png" /></div>
 
 
-## Attempt 4: "Most Significant Predictors"
+### Attempt 4: "Most Significant Predictors"
 
 Because of computation time, these results are aggregated from 20 iterations of the fitting process.
 
