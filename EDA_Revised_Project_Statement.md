@@ -47,39 +47,32 @@ In the neuropsychological test data, we explored which tests were administered u
 
 ### HCI Exploration
 
-![png](EDA_Revised_Project_Statement_files/EDA_Revised_Project_Statement_10_0.png)
-
+<div style="text-align:center"><img src ="EDA_Revised_Project_Statement_files/EDA_Revised_Project_Statement_10_0.png" /></div>
 
 
 In the data summary above, we observed that the mean and variation of HCI scores increased over time. In the plot, we see that the distributions broadened but the central peak did not shift noticeably. The shapes of the plots remained normally distributed, with perhaps a slight left skew, over time. 
 
 
 
-
-![png](EDA_Revised_Project_Statement_files/EDA_Revised_Project_Statement_13_0.png)
+<p style="text-align: center;"> <strong> Correlations of ADAS Scores and HCI </strong> </p>
+<div style="text-align:center"><img src ="EDA_Revised_Project_Statement_files/EDA_Revised_Project_Statement_13_0.png" /></div>
 
 
 In the plots above, we observed a linear relationship between the HCI and ADAS scores. As time progressed, patient HCI scores tended to increase but the relationship with ADAS scores remained linear.
 
-
-
-
-![png](EDA_Revised_Project_Statement_files/EDA_Revised_Project_Statement_15_0.png)
-
+<p style="text-align: center;"> <strong> Correlations of Composite Test Scores and HCI </strong> </p>
+<div style="text-align:center"><img src ="EDA_Revised_Project_Statement_files/EDA_Revised_Project_Statement_15_0.png" /></div>
 
 In the subplots above, we observed clear linear trends for the FAQ, MM, and CD tests, with suggestions of a trend for the NPI score. The HM and GD tests did not seem to be obviously correlated. However, there may be individual items from these tests which add to the predictive power of our models.
 
 ## Correlations among exam items
 
 
-
-
-![png](EDA_Revised_Project_Statement_files/EDA_Revised_Project_Statement_19_0.png)
-
+<div style="text-align:center"><img src ="EDA_Revised_Project_Statement_files/EDA_Revised_Project_Statement_19_0.png" /></div>
 
 
 
-![png](EDA_Revised_Project_Statement_files/EDA_Revised_Project_Statement_20_0.png)
+<div style="text-align:center"><img src ="EDA_Revised_Project_Statement_files/EDA_Revised_Project_Statement_20_0.png" /></div>
 
 
 The above plots demonstrate that while some of the items are highly correlated, others are less predictive of one another. Some items are also less correlated with the total score on the exam, so some subset of items may predict HCI better than the overall scores.
