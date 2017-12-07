@@ -23,14 +23,7 @@ Both of these models had high variance. The table and boxplots below show the R2
 **ADAS Questions**: 0.347127
 
 
-```python
-
-```
-
-
-
-
-<div>
+<div style="text-align:center">
 <style>
     .dataframe thead tr:only-child th {
         text-align: right;
@@ -97,9 +90,7 @@ Both of these models had high variance. The table and boxplots below show the R2
 </table>
 </div>
 
-
-![png](output_4_1.png)
-
+<div style="text-align:center"><img src ="images/output_4_1.png" /></div>
 
 ## Attempts to Improve the Model
 
@@ -205,9 +196,9 @@ These results are aggregated from 100 iterations of the fitting and scoring proc
 </table>
 </div>
 
+We fit models separately for data from the baseline of the study, six months after baseline, and twelve months after baseline.
 
-![png](output_11_1.png)
-
+<div style="text-align:center"><img src ="images/output_11_1.png" /></div>
 
 ## Attempt 2: Random Forest
 
@@ -273,7 +264,7 @@ Because of computation time, these results are aggregated from 5 iterations of f
 </div>
 
 
-![png](output_15_1.png)
+<div style="text-align:center"><img src ="images/output_15_1.png" /></div>
 
 
 ## Attempt 3: Step Forward Variable Selection
@@ -281,7 +272,7 @@ Because of computation time, these results are aggregated from 5 iterations of f
 These results are aggregated from 100 iterations of the fitting and scoring process.
 
 
-<div>
+<div style="text-align:center">
 <style>
     .dataframe thead tr:only-child th {
         text-align: right;
@@ -359,7 +350,7 @@ These results are aggregated from 100 iterations of the fitting and scoring proc
 
 
 
-![png](output_19_1.png)
+<div style="text-align:center"><img src ="images/output_19_1.png" /></div>
 
 
 ## Attempt 4: "Most Significant Predictors"
@@ -444,5 +435,5 @@ Because of computation time, these results are aggregated from 20 iterations of 
 </div>
 
 
-![png](output_23_1.png)
+<div style="text-align:center"><img src ="images/output_23_1.png" /></div>
 
