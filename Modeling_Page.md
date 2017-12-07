@@ -22,7 +22,6 @@ Both of these models had high variance. The table and boxplots below show the R2
 
 **ADAS Questions**: 0.347127
 
-
 <div style="text-align:center">
 <style>
     .dataframe thead tr:only-child th {
@@ -37,7 +36,7 @@ Both of these models had high variance. The table and boxplots below show the R2
         vertical-align: top;
     }
 </style>
-<table border="1" class="dataframe">
+<table border="0" class="dataframe" align="center" >
   <thead>
     <tr style="text-align: right;">
       <th></th>
@@ -134,7 +133,7 @@ These results are aggregated from 100 iterations of the fitting and scoring proc
         vertical-align: top;
     }
 </style>
-<table border="1" class="dataframe">
+<table border="0" class="dataframe">
   <thead>
     <tr style="text-align: right;">
       <th></th>
@@ -219,7 +218,7 @@ Because of computation time, these results are aggregated from 5 iterations of f
         vertical-align: top;
     }
 </style>
-<table border="1" class="dataframe">
+<table border="0" class="dataframe">
   <thead>
     <tr style="text-align: right;">
       <th></th>
@@ -286,7 +285,7 @@ These results are aggregated from 100 iterations of the fitting and scoring proc
         vertical-align: top;
     }
 </style>
-<table border="1" class="dataframe">
+<table border="0" class="dataframe">
   <thead>
     <tr style="text-align: right;">
       <th></th>
@@ -372,7 +371,7 @@ Because of computation time, these results are aggregated from 20 iterations of 
         vertical-align: top;
     }
 </style>
-<table border="1" class="dataframe">
+<table border="0" class="dataframe">
   <thead>
     <tr style="text-align: right;">
       <th></th>
