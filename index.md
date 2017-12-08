@@ -1,7 +1,7 @@
 ---
 title: A Cheaper Way to Target Expensive Diagnostic Techniques for Alzheimer's?
 ---
-
+(Alli Welton & Zach Himmelsbach - Group 59)
 
 ### Project Motivation
 
