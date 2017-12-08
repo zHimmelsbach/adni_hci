@@ -197,7 +197,7 @@ These results are aggregated from 100 iterations of the fitting and scoring proc
 
 We fit models separately for data from the baseline of the study, six months after baseline, and twelve months after baseline.
 
-<div style="text-align:center"><img src ="images/output_11_1.png" /></div>
+<div style="text-align:center"><img src ="images/pca.png" /></div>
 
 ### Attempt 2: Random Forest
 
@@ -263,7 +263,7 @@ Because of computation time, these results are aggregated from 5 iterations of f
 </div>
 
 
-<div style="text-align:center"><img src ="images/output_15_1.png" /></div>
+<div style="text-align:center"><img src ="images/output_52_1.png" /></div>
 
 
 ### Attempt 3: Step Forward Variable Selection
@@ -349,7 +349,7 @@ These results are aggregated from 100 iterations of the fitting and scoring proc
 
 
 
-<div style="text-align:center"><img src ="images/output_19_1.png" /></div>
+<div style="text-align:center"><img src ="images/step.png" /></div>
 
 
 ### Attempt 4: "Most Significant Predictors"
@@ -434,6 +434,6 @@ Because of computation time, these results are aggregated from 20 iterations of 
 </div>
 
 
-<div style="text-align:center"><img src ="images/output_23_1.png" /></div>
+<div style="text-align:center"><img src ="images/signif.png" /></div>
 
 
