@@ -47,7 +47,7 @@ We then plotted the composite scores for the other cognitive tests over HCI scor
 <p style="text-align: center;"> <strong> Correlations of Composite Test Scores and HCI </strong> </p>
 <div style="text-align:center"><img src ="EDA_Revised_Project_Statement_files/EDA_Revised_Project_Statement_15_0.png" /></div>
 
-## Exploration of Correlations Among Exam Items
+### Exploration of Correlations Among Exam Items
 
 We expected feature selection to be the central challenge in our model fitting, so we examined the degree to which items within each exam were correlated. While we noticed high correlations between some items, this was not true in general. We also observed that some of the items were more correlated with the composite exam scores than others, suggesting that a subset of these items may be more predictive of HCI than the overall scores. This encouraged us to continue with our research question.
 
