@@ -9,82 +9,52 @@ nav_include: 2
 *  
 {: toc}
 
+## Data Exploration
 
+#### Process of Determining the Response Variable
 
-## Can we predict a patient's HCI (hypometabolic convergence index) given their answers to a group of cognitive tests?
+Before settling on using the HCI as a response variable, we considered the Amyloid Convergence Index (a similar measurement developed by BAI that considers amyloid plaque build-up) as well as attempting to create a Tau Convergence Index (which would take the same approach as ACI or HCI, but instead look at tau protein tangles) to use as response variables for additional models. However, creating a TCI would have been much more demanding than our time allowed, and when we reviewed the dataset, we realized that the ACI data had not been computed for many patients in ADNI1 and lacked published documentation, so we decided to predict the HCI alone. 
 
-One of the indicators of Alzheimer's disease is hypometabolism (low levels of metabolic activity) in particular regions of the brain. Hypometabolism can be visualized in a PET scan of the brain using a radioactive glucose tracer, known as FDG-PET. However, an FDG-PET scan will usually cost a patient around $6700. Being able to predict the HCI from a set of cognitive test questions, and thus the likelihood that a patient with mild cognitive impairment will decline to Alzheimer's, could save money for patients and help alert families earlier. 
+We saw an opportunity to contribute to existing work on the HCI because, while the BAI team did consider the ADAS, MMSE, and CD assessments, they did not attempt to parse out which questions from the cognitive tests are most relevant for predicting HCI, nor did they consider the FAQ and NPI tests. Furthermore, our results may add robustness to those of the BAI team because they are constrained to a smaller sample of patients (~130) for whom the hippocampal volume was recorded.
 
-### Description of Data
+#### Rationale for Regression Rather Than Classification
 
-#### What type of data are you dealing with?
-*Response Variable* 
+Once we settled on the HCI as an outcome, we considered the question of using regression to predict the HCI or using classification to predict whether or not a patient would be over the threshold HCI value that Chen et al identified as indicating a high risk of Mild Cognitive Impairment developing into Alzheimer's. One approach would have been to predict whether a patient's HCI fell in the 95% confidence interval that Chen et al identified for the threshold value. However, their confidence interval was very large, ranging from 2 to 20, and included 94% of the observations in one training set. We felt that categorizing almost every patient as likely to decline to Alzheimer's would not achieve our goal of reducing costs by better targeting PET scans. In addition, we thought that being able to predict the exact HCI value would be more useful to clinicians because higher vaues correspond with greater risks. Chen et al's work was the first predictive study using HCI, and other researchers may narrow the confidence interval for threshold HCI values in the future, at which time a classification model may become more useful.
 
-Our response variable will be the Hypometabolic Convergence Index, a measure developed by the Banner Alzheimer's Institute that indicates the degree to which a patient's FDG-PET brain scans correspond to those of a patient with an Alzheimer's diagnosis. In a 2011 paper, a team at BAI found that HCI was able to predict whether or not a patient with Mild Cognitive Impairment would develop Alzheimer's better than other biomarkers (hippocampal volume, amyloid and tau proteins in cerebral spinal fluid), memory test scores, and clinical assessments. 
+#### Data Cleaning Process
 
-The BAI team found that an 8.36 threshold value for the HCI (determined using a ROC curve) resulted in a 6.55 hazard ratio under the Cox Proportional Hazard Model(the meaning of the hazard ratio is that for every unit increase in HCI beyond that threshold, the chance of developing Alzheimer's increases by 6.55) (Chen et al, 57).
+The dataset we downloaded from LONI's Image Analysis sets included the HCI, date of exam, whether the exam was at 6, 12, 18, etc. months past a patient's baseline visit, and patient ID. We originally had 2865 HCI measurements from 1420 patients, but after extracting ADNI 1 participants for whom we had cognitive test score information, we had 605 records remaining for 220 patients (218 from baseline visits, 203 from 6-month visits, and 184 from 12-month visits). 
 
-The dataset includes the HCI, date of exam, whether the exam was at 6, 12, 18, etc. months past a baseline visit, and patient ID. We originally had 2865 HCI measurements from 1420 patients, but after extracting ADNI 1 participants for whom we had cognitive test score information, we had 605 records remaining for 220 patients (218 from baseline visits, 203 from 6-month visits, and 184 from 12-month visits). 
+From the neuropsychological test datasets on LONI, we selected those which were included in ADNI 1. We excluded one exam that had a high level of missingness. After tabulating how many unique patients had scores and sub-task scores for each exam, we found that that the number of records dropped precipitously for exams administered more than 12 months after baseline, so we decided to constrain ourselves to baseline, 6 month, and 12 month records. For each of the seven exams we cleaned data and merged them together by patient ID, checking how many subjects had records for all tests. We then hot-encoded the categorical questions with multiple levels so we had only binary categorical predictor columns. 
 
-*Predictors*
-
-Under the ADNI 1 protocol, eight neuropsychological exams were administered, seven of which we have combined for predictive modeling of HCI. For each exam, we have the subject's scores at baseline, six months later, and 12 months later, matching the dates of the PET scans. (The original dataset includes additional testing at later dates, but relatively few participants have exam scores after the 12 month mark). The exams include sub-tasks testing patients' word recall, ability to follow instructions, memory, orientation (i.e. knowing who and where they are), and ability to perform daily tasks. Some of the tests must be administered by a medical professional directly to the patient, but others, like the Mini Mental-State Exam, can be given to the patient by anyone. One exam, the NPI, asks a caregiver about the patient's behavior. The dataset includes composite scores from each exam as well as sub-task (in some cases, item-level) scores. We excluded one exam due to high levels of missingness; similar items are present in the other tests. 
-
-
-
-
-
-
-
-#### Exploration
-
-We first considered using the Amyloid Convergence Index (a similar measurement developed by BAI that considers amyloid plaque build-up) or attempting to create a Tau Convergence Index (which would take the same approach as ACI or HCI, but instead looking at tau protein tangles) as response variables for which to build additional models. However, creating a TCI would have been more complicated than the scope of this project allows. The ACI data had not been computed for many patients in ADNI1 and did not have published documentation, so we decided to stick to attempting to predict the HCI alone. 
-
-We noted that the BAI team found significant correlations between the HCI and scores on the ADAS, MMSE, AVLT,BNT, Animal/Vegetable-Naming, and Clock-Drawing tests (Chen et al, 56). However the BAI team did not attempt to parse out relationships between individual questions on these tests. In the EDA visualizations (see below), we also observed that the FAQ test and NPI test (which the BAI team did not test) appear to be linearly correlated with HCI.
-
-In the neuropsychological test data, we explored which tests were administered under each ADNI protocol, selecting those which were included in ADNI 1. We tabulated how many unique patients had scores and sub-task scores for each exam, and noted that the number of records dropped for exams administered more than 12 months after baseline. For each of the seven exams we cleaned data and merged them together by patient ID, checking how many subjects had records for all tests. In preparation for feature selection (since we have many test items to choose from), we examined the correlations between items on the various tests.
+## Data Visualization & Exploration
 
 
 ### HCI Exploration
 
+We first examined the distribution of HCI over the progression of visits, and observed that the mean and variation of HCI scores increased over time. In the plot below, we see that the distributions broadened but the central peak did not shift noticeably. The shapes of the plots remained normally distributed, with perhaps a slight right skew.
+
 <div style="text-align:center"><img src ="EDA_Revised_Project_Statement_files/EDA_Revised_Project_Statement_10_0.png" /></div>
 
+We looked at correlations between HCI and the individual test sets. We started off by checking that the relationship between ADAS & HCI did not noticeably vary over time, which was true. In the plots below, it's clear that as time progressed HCI scores tended to increase, but the scatterplots of ADAS composite scores over HCI remained linear.
 
-In the data summary above, we observed that the mean and variation of HCI scores increased over time. In the plot, we see that the distributions broadened but the central peak did not shift noticeably. The shapes of the plots remained normally distributed, with perhaps a slight left skew, over time. 
-
-
-
-<p style="text-align: center;"> <strong> Correlations of ADAS Scores and HCI </strong> </p>
+<p style="text-align: center;"> <strong> Relationship Between ADAS and HCI at Different Periods of the Study </strong> </p>
 <div style="text-align:center"><img src ="EDA_Revised_Project_Statement_files/EDA_Revised_Project_Statement_13_0.png" /></div>
 
 
-In the plots above, we observed a linear relationship between the HCI and ADAS scores. As time progressed, patient HCI scores tended to increase but the relationship with ADAS scores remained linear.
+We then plotted the composite scores for the other cognitive tests over HCI scores (see plots below). We observed clear linear trends for the FAQ, MM, and CD tests, and a less definitive trend for the NPI score. The HM and GD tests did not seem to be obviously correlated. However, we believed that there still may be individual items from these tests which would add to the predictive power of our models, so we retained those questions in our modeling stage.
 
 <p style="text-align: center;"> <strong> Correlations of Composite Test Scores and HCI </strong> </p>
 <div style="text-align:center"><img src ="EDA_Revised_Project_Statement_files/EDA_Revised_Project_Statement_15_0.png" /></div>
 
-In the subplots above, we observed clear linear trends for the FAQ, MM, and CD tests, with suggestions of a trend for the NPI score. The HM and GD tests did not seem to be obviously correlated. However, there may be individual items from these tests which add to the predictive power of our models.
+## Exploration of Correlations Among Exam Items
 
-## Correlations among exam items
-
+We expected feature selection to be the central challenge in our model fitting, so we examined the degree to which items within each exam were correlated. While we noticed high correlations between some items, this was not true in general. We also observed that some of the items were more correlated with the composite exam scores than others, suggesting that a subset of these items may be more predictive of HCI than the overall scores. This encouraged us to continue with our research question.
 
 <div style="text-align:center"><img src ="EDA_Revised_Project_Statement_files/EDA_Revised_Project_Statement_19_0.png" /></div>
 
-
-
 <div style="text-align:center"><img src ="EDA_Revised_Project_Statement_files/EDA_Revised_Project_Statement_20_0.png" /></div>
 
-
-The above plots demonstrate that while some of the items are highly correlated, others are less predictive of one another. Some items are also less correlated with the total score on the exam, so some subset of items may predict HCI better than the overall scores.
-
-## Revision of Project Question
-
-We originally hoped to use cheap cognitive test data to predict information about some of the more expensive Alzheimer's diagnostic tools, such as PET and MRI scans. In the process of data exploration, we were able to settle on the HCI index as a meaningful and convenient response variable that would alleviate any need to process PET images ourselves. 
-
-We saw an opportunity to contribute to existing work on the HCI because while the BAI team did consider the ADAS, MMSE, and CD assessments, they did not attempt to parse out which questions from the cognitive tests are most relevant for predicting HCI, nor did they consider the FAQ and NPI tests. Furthermore, our results may add robustness to those of the BAI team because they were constrained to a smaller sample of patients (~130) for whom the hippocampal volume was recorded.
-
-#### References:
-K. Chen, N. Ayutyanont, J. B. Langbaum, A. S. Fleisher, C. Reschke, W. Lee, X. Liu, D. Bandy, G. E. Alexander, P. M. Thompson, L. Shaw, J. Q. Trojanowski, C. R. Jack, Jr., S. M. Landau, N. L. Foster, D. J. Harvey, M. W. Weiner, R. A. Koeppe, W. J. Jagust, and E. M. Reiman, "Characterizing Alzheimer's disease using a hypometabolic convergence index," *Neuroimage.*, vol. 56, no. 1, pp. 52-60, May 2011.
 
 
 
